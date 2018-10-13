@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6d54826-e1d3-40e2-ae20-b715c93d4e54" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/board.py" afterDir="false" />
+>>>>>>> 4fc6dd3ddbbf1073deb59986b7d015e4cf3a2769
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,6 +50,7 @@
         </counts>
       </usages-collector>
     </session>
+<<<<<<< HEAD
     <session id="1559909712">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
@@ -61,16 +68,37 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Python" value="3" />
+=======
+    <session id="107607706">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.opened" value="1" />
+>>>>>>> 4fc6dd3ddbbf1073deb59986b7d015e4cf3a2769
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+<<<<<<< HEAD
           <entry key="py" value="42" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Python" value="42" />
+=======
+          <entry key="board" value="3" />
+          <entry key="py" value="263" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open" />
+      <usages-collector id="statistics.vcs.git.usages" />
+      <usages-collector id="statistics.js.language.service.starts" />
+      <usages-collector id="statistics.file.types.open" />
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="266" />
+>>>>>>> 4fc6dd3ddbbf1073deb59986b7d015e4cf3a2769
         </counts>
       </usages-collector>
     </session>
@@ -85,10 +113,18 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game/board.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="986">
               <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
+=======
+            <state relative-caret-position="120">
+              <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+                <marker date="1539429503403" expanded="true" signature="489:498" ph="..." />
+>>>>>>> 4fc6dd3ddbbf1073deb59986b7d015e4cf3a2769
               </folding>
             </state>
           </provider>
@@ -137,18 +173,54 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="ProjectFrameBounds">
     <option name="x" value="-7" />
     <option name="width" value="696" />
     <option name="height" value="735" />
+=======
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1680" />
+    <option name="height" value="947" />
+>>>>>>> 4fc6dd3ddbbf1073deb59986b7d015e4cf3a2769
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
+<<<<<<< HEAD
     <panes />
+=======
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="SpookyBot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpookyBot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SpookyBot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SpookyBot" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+>>>>>>> 4fc6dd3ddbbf1073deb59986b7d015e4cf3a2769
   </component>
   <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -169,17 +241,15 @@
       <module name="SpookyBot" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/game" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/game/board.py" />
       <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
@@ -206,22 +276,31 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-7" y="0" width="696" height="735" extended-state="0" />
+=======
+    <frame x="0" y="23" width="1680" height="947" extended-state="6" />
+    <editor active="true" />
+>>>>>>> 4fc6dd3ddbbf1073deb59986b7d015e4cf3a2769
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24244833" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24236874" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.56405693" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.56405693" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.7597865" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.7590643" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.0" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="10" visible="true" weight="0.32982457" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="SciView" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -245,6 +324,9 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -270,10 +352,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/game/board.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="986">
           <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+=======
+        <state relative-caret-position="120">
+          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <marker date="1539429503403" expanded="true" signature="489:498" ph="..." />
+>>>>>>> 4fc6dd3ddbbf1073deb59986b7d015e4cf3a2769
           </folding>
         </state>
       </provider>

@@ -2,6 +2,7 @@ import numpy as np
 import sys
 from random import randint
 
+
 class Board:
 
     def __init__(self):
@@ -31,11 +32,15 @@ class Board:
                           ["X", "X"],
                           ]
         self.cell_array = np.chararray((24, 15), unicode=True)
-        self.dice = [1, 4]
+        self.dice = [None, None]
         self.jailX = []
         self.jailO = []
         self.startO = self.cell_list[0:6]
         self.startX = self.cell_list[23:17:-1]
+        self.homeO = self.cell_list[23:17:-1]
+        self.homeX = self.cell_list[0:6]
+        self.beared_offO = 0
+        self.beared_offX = 0
 
     def roll_dice(self):
         self.dice[0] = randint(1, 6)
@@ -43,6 +48,8 @@ class Board:
 
         if self.dice[0] == self.dice[1]:
             self.dice.extend(self.dice)
+
+        print("You roled dice:", self.dice)
 
     def update_cell_array(self):
         length_list = [len(x) for x in self.cell_list]
@@ -59,7 +66,6 @@ class Board:
         self.cell_array = np.array(clean_list)
 
     def draw_board(self):
-        print(self.cell_list)
         self.update_cell_array()
         full_board = self.cell_array.swapaxes(0, 1)
         bottom_half = full_board[:, 0:12]
@@ -75,7 +81,13 @@ class Board:
         left_board = board[:, 0:6]
         right_board = board[:, 6:13]
         board = np.concatenate((left_board, bar, right_board), axis=1)
-        return board
+        f = "11---10---09---08---07---06-------05---04---03---02---01---00"
+        h = "12---13---14---15---16---17-------18---19---20---21---22---23"
+        np.savetxt(sys.stdout, board, fmt="%s", header=h, footer=f, comments="", delimiter="    ")
+        jail_x_string = " ".join(self.jailX)
+        jail_o_string = " ".join(self.jailO)
+        print("O JAIL ", jail_x_string)
+        print('X JAIL ', jail_o_string)
 
     def is_cell_available(self, l, cell, symbol):
         try:
@@ -90,17 +102,17 @@ class Board:
         if symbol == 'O':
             destination = start + number
             print("positive direction", destination)
-            jail=self.jailX
+            jail = self.jailX
         else:
             destination = start - number
             print("negative direction", destination)
-            jail=self.jailO
+            jail = self.jailO
         if self.cell_list[start][0] not in jail:
-            #print("succ1")
+            # print("succ1")
             if number in self.dice:
-                #print("succ2")
+                # print("succ2")
                 if self.is_cell_available(self.cell_list, destination, self.cell_list[start][0]):
-                    #print("succ3")
+                    # print("succ3")
                     return True
         print("Invalid move")
         return False
@@ -115,16 +127,16 @@ class Board:
         if symbol == 'O':
             print("positive direction")
             destination = start + number
-            jail=self.jailX
+            jail = self.jailX
             print("jail is jail X")
         elif symbol == 'X':
             print("negative direction")
             destination = start - number
-            jail=self.jailO
+            jail = self.jailO
             print("jail is jail 0")
         else:
             print("Invalid symbol")
-        if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start,symbol):
+        if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start, symbol):
             if len(self.cell_list[destination]) == 1:
                 jail.append(self.cell_list[destination][0])
                 self.cell_list[destination].pop(0)
@@ -149,22 +161,26 @@ class Board:
         else:
             print("You can't bring back checker at position:", start[number], start, number)
 
-if __name__ == '__main__':
-    b = Board()
-    f = "11---10---09---08---07---06-------05---04---03---02---01---00"
-    h = "12---13---14---15---16---17-------18---19---20---21---22---23"
+    def bear_off(self, symbol, number):
+        if symbol == 'O':
+            home = self.homeO
+            beared_off = self.beared_offO
+        elif symbol == 'X':
+            home = self.homeX
+            beared_off = self.beared_offX
 
-    np.savetxt(sys.stdout, b.draw_board(), fmt="%s", header=h, footer=f, comments="", delimiter="    ")
+        total = 0
+        for l in home:
+            total += l.count(symbol)
 
-    #b.roll_dice()
-    #print(b.dice)
-    b.make_move(23, 1, 'X')
-    b.make_move(18, 4, 'O')
-    print("jails: ", b.jailX, b.jailO)
+        if total == 15:
+            if len(home[number]) >= 1:
+                if home[number][0] == symbol:
+                    beared_off.append(home[number].pop())
+                else:
+                    print("You can't bear off an opponent's checker")
+            else:
+                print("There is no checkers at this position to bear off, you must make a move within home")
+        else:
+            print("You haven't moved all checkers to home yet.")
 
-    b.release_from_jail("X", 3)
-    print("jails: ", b.jailX, b.jailO)
-
-    np.savetxt(sys.stdout, b.draw_board(), fmt="%s", header=h, footer=f, comments="", delimiter="    ")
-
-    print(b.dice)

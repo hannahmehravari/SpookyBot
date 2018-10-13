@@ -1,6 +1,6 @@
 # all logic will go here
 
-import discord
+import discord, re
 
 # Creates new client
 client = discord.Client()
@@ -16,10 +16,11 @@ async def on_message(message):
         msg = '{0.author.mention}, are you ready to face the big Spook?!'.format(message)
         await client.send_message(message.channel, msg)
 
-    #dadbot command (detects string "im/i am X" and replies with "hi X, im Dad!"
-    if "im" in message.content.lower():
-        reply = find_between(message.content, "im ", " ")
-        msg = "Hi "+reply+", im Dad!".format(message)
+    #dadbot command (detects string "im/i am X" and replies with "hi X, im Dad!")
+    if ("im" or "i'm")in message.content.lower():
+        regex = r"[a-zA-Z0-9']"
+        reply = re.search(
+        msg = "Hi "+reply+", I'm Dad!".format(message)
         await client.send_message(message.channel, msg)
 
 @client.event
@@ -29,7 +30,7 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-def find_between(s, start, end):
+def dad_split(s, start, end):
     return (s.split(start)[1].split(end)[0])
     
 # 

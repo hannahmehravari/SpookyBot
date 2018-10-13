@@ -2,7 +2,6 @@ import numpy as np
 import sys
 from random import randint
 
-
 class Board:
 
     def __init__(self):
@@ -33,7 +32,8 @@ class Board:
                           ]
         self.cell_array = np.chararray((24, 15), unicode=True)
         self.dice = [None, None]
-        self.jail = []
+        self.jailX = []
+        self.jailO = []
 
     def roll_dice(self):
         self.dice[0] = randint(1, 6)
@@ -88,15 +88,17 @@ class Board:
         if symbol == 'O':
             destination = start + number
             print("positive direction", destination)
+            jail=self.jailX
         else:
             destination = start - number
             print("negative direction", destination)
-        if self.cell_list[start][0] not in self.jail:
-            print("succ1")
+            jail=self.jailO
+        if self.cell_list[start][0] not in jail:
+            #print("succ1")
             if number in self.dice:
-                print("succ2")
+                #print("succ2")
                 if self.is_cell_available(destination, self.cell_list[start][0]):
-                    print("succ3")
+                    #print("succ3")
                     return True
         print("Invalid move")
         return False
@@ -111,12 +113,16 @@ class Board:
         if symbol == 'O':
             print("positive direction")
             destination = start + number
+            jail=self.jailX
+            print("jail is jail X")
         else:
             print("negative direction")
             destination = start - number
+            jail=self.jailO
+            print("jail is jail 0")
         if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start,symbol):
             if len(self.cell_list[destination]) == 1:
-                self.jail.append(self.cell_list[destination][0])
+                jail.append(self.cell_list[destination][0])
                 self.cell_list[destination].pop(0)
 
             self.cell_list[destination].append(self.cell_list[start][0])
@@ -131,10 +137,12 @@ if __name__ == '__main__':
 
     np.savetxt(sys.stdout, b.draw_board(), fmt="%s", header=h, footer=f, comments="", delimiter="    ")
 
-    b.roll_dice()
-    print(b.dice)
-    b.make_move(0, b.dice[0], 'O')
+    #b.roll_dice()
+    #print(b.dice)
+    b.make_move(0, 1, 'O')
+    b.make_move(5, 4, 'X')
 
+    print("jails: ", b.jailX, b.jailO)
 
     np.savetxt(sys.stdout, b.draw_board(), fmt="%s", header=h, footer=f, comments="", delimiter="    ")
 

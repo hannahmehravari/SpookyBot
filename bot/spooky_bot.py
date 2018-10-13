@@ -18,9 +18,9 @@ async def on_message(message):
 
     #dadbot command (detects string "im/i am X" and replies with "hi X, im Dad!")
     if ("im" or "i'm")in message.content.lower():
-        regex = r"[a-zA-Z0-9']"
-        reply = re.search(
-        msg = "Hi "+reply+", I'm Dad!".format(message)
+        regex = r"[a-zA-Z0-9' ]+"
+        reply = re.search(regex,message.content).group(0)[3:]
+        msg = ("Hi "+reply+", I'm Dad!").format(message)
         await client.send_message(message.channel, msg)
 
 @client.event
@@ -29,9 +29,6 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-
-def dad_split(s, start, end):
-    return (s.split(start)[1].split(end)[0])
     
 # 
 client.run('NTAwNDY0MTgxNDY4NzI1MjU2.DqNjSg.uS1w8xjdvqXKIBzfM-6vilypUC0')

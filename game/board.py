@@ -76,22 +76,45 @@ class Board:
         return board
 
     def is_cell_available(self, cell, checker):
-        if len(self.cell_list[cell]) > 1 and self.cell_list[cell][0] != checker:
-            print("Cell is not available")
-            return False
-        return True
+        try:
+            if len(self.cell_list[cell]) > 1 and self.cell_list[cell][0] != checker:
+                print("Cell is not available")
+                return False
+            return True
+        except IndexError:
+            print("You can't move this checker")
 
-    def is_move_valid(self, start, number):
+    def is_move_valid(self, start, number, symbol):
+        if symbol == 'O':
+            destination = start + number
+            print("positive direction", destination)
+        else:
+            destination = start - number
+            print("negative direction", destination)
         if self.cell_list[start][0] not in self.jail:
+            print("succ1")
             if number in self.dice:
-                if self.is_cell_available(start + number, self.cell_list[start][0]):
+                print("succ2")
+                if self.is_cell_available(destination, self.cell_list[start][0]):
+                    print("succ3")
                     return True
         print("Invalid move")
         return False
 
-    def make_move(self, start, number):
-        destination = start + number
-        if self.is_move_valid(start, number):
+    def is_symbol_valid(self, start, symbol):
+        if self.cell_list[start][0] == symbol:
+            return True
+        else:
+            return False
+
+    def make_move(self, start, number, symbol):
+        if symbol == 'O':
+            print("positive direction")
+            destination = start + number
+        else:
+            print("negative direction")
+            destination = start - number
+        if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start,symbol):
             if len(self.cell_list[destination]) == 1:
                 self.jail.append(self.cell_list[destination][0])
                 self.cell_list[destination].pop(0)
@@ -110,7 +133,8 @@ if __name__ == '__main__':
 
     b.roll_dice()
     print(b.dice)
-    b.make_move(0, b.dice[0])
+    b.make_move(0, b.dice[0], 'O')
+
 
     np.savetxt(sys.stdout, b.draw_board(), fmt="%s", header=h, footer=f, comments="", delimiter="    ")
 

@@ -12,6 +12,7 @@ def backgammon():
     while not exit_game:
         if len(board.dice) == 0:
             board.roll_dice()
+        print("Your current dice:", board.dice)
 
         command = input("Enter command: ")
         symbol = 'O'

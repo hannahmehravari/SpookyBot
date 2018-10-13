@@ -101,18 +101,13 @@ class Board:
     def is_move_valid(self, start, number, symbol):
         if symbol == 'O':
             destination = start + number
-            print("positive direction", destination)
             jail = self.jailX
         else:
             destination = start - number
-            print("negative direction", destination)
             jail = self.jailO
         if self.cell_list[start][0] not in jail:
-            # print("succ1")
             if number in self.dice:
-                # print("succ2")
                 if self.is_cell_available(self.cell_list, destination, self.cell_list[start][0]):
-                    # print("succ3")
                     return True
         print("Invalid move")
         return False
@@ -125,25 +120,21 @@ class Board:
 
     def make_move(self, start, number, symbol):
         if symbol == 'O':
-            print("positive direction")
             destination = start + number
             jail = self.jailX
-            print("jail is jail X")
         elif symbol == 'X':
-            print("negative direction")
             destination = start - number
             jail = self.jailO
-            print("jail is jail 0")
         else:
             print("Invalid symbol")
         if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start, symbol):
             if len(self.cell_list[destination]) == 1 and self.cell_list[destination][0] != symbol:
                 jail.append(self.cell_list[destination][0])
                 self.cell_list[destination].pop(0)
-
-            self.cell_list[destination].append(self.cell_list[start][0])
-            self.cell_list[start].pop(0)
-            self.dice.remove(number)
+            else:
+                self.cell_list[destination].append(self.cell_list[start][0])
+                self.cell_list[start].pop(0)
+                self.dice.remove(number)
 
     def release_from_jail(self, symbol, number):
         if symbol == 'O':

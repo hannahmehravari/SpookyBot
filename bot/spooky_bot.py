@@ -69,24 +69,53 @@ async def backgammon(message):
 
     #making a move
     if inGame and message.content.startswith("!move"):
-        regex = r'!\c{4} \d{2} \d'
-        move = message.content()
-        
+        regex = r'!\move \d{2} \d'
+        move = message.content().split()
+        moveCounter, moveRoll = move[1],move[2]
+        BGMove(moveCounter, moveRoll)
+        backgammon_print()
 
     #release from jail
+    if inGame and message.content.startswith("!rel"):
+        regex = r'!rel \d'
+        rel = message.content().split()[1]
+        BGRelease(rel)
 
     #bear off
+    if inGame and message.content.startswith("!bearoff"):
+        regex = r'!bearoff \d'
+        boff = message.content.split()[1]
+        BGBearOff(boff)
 
     #help
+    if message.content.startswith("!bghelp"):
+        await client.send_message(message.channel,
+        """While Playing Backgammon, the commands avaliable to use are: \n
 
-    #quit
-    
-    
+            1. !move (counter) (roll) - where counter is a 2-digit number for
+            the column with a counter you want to move, and roll is the number
+            of spaces you want to move (has to be a number you rolled)\n
+            
+            2. !rel (start cell) - where start cell is a 2-digit number for the
+            column where you want to release (needs to be a number you rolled,
+            and the station needs to have no enemy counters in it)
+
+            3. !bearoff (home cell) - where home cell is a number (1-6), for
+            a base station where you have a counter to bear off (has to be a
+            number you rolled)
+
+            4. !quit - quits the current game of backgammon against the bot and
+            returns the bot to normal function""")
+        
+    #quit    
+    if inGame and message.content.startswith("!quit"):
+        inGame = False
+        
 def backgammon_print(board):
     curLine = board[:61]
     remBoard = board[61:]
     reply = ""
-    while (remBoard.len() > 0):
+    while (remBoard.len() > 0 and inGame = True):
         reply.append(curLine + "\n")
         curLine = remBoard[:61]
         remBoard = remBoard[61:]

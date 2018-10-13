@@ -27,7 +27,7 @@ async def backgammon_test(context):
     
 @client.event
 async def on_ready():
-    await client.change_presence(game = Game(name='with italic hands'))
+    await client.change_presence(game = Game(name='Backgammon'))
     print ("Logged in as " + client.user.name)
 
 client.run(TOKEN)

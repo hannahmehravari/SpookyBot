@@ -16,6 +16,10 @@ async def on_message(message):
         msg = '{0.author.mention}, are you ready to face the big Spook?!'.format(message)
         await client.send_message(message.channel, msg)
 
+    #dadbot command (detects string "im/ i am X" and replies with "hi X, im Dad!"
+    if lower(message.content.contains("im" or "i'm" or "i am" or "me me"):
+        reply = message.content
+
 @client.event
 async def on_ready():
     print('Logged in as')

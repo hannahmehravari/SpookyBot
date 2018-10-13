@@ -5,15 +5,18 @@ import sys
 
 def backgammon():
     board = Board()
-
     exit_game = False
     board.roll_dice()
     board.draw_board()
 
     while not exit_game:
+        if len(board.dice) == 0:
+            board.roll_dice()
+
         command = input("Enter command: ")
         symbol = 'O'
         c_list = command.split(" ")
+
         if command[0] == 'Q':
             exit_game = True
         elif command[0] == 'M':
@@ -22,7 +25,6 @@ def backgammon():
                 continue
             else:
                 board.make_move(int(c_list[1]), int(c_list[2]), symbol)
-                board.roll_dice()
                 board.draw_board()
 
         elif command[0] == 'R':
@@ -31,7 +33,6 @@ def backgammon():
                 continue
             else:
                 board.release_from_jail(symbol, int(c_list[1]) - 1)
-                board.roll_dice()
                 board.draw_board()
 
         elif command[0] == 'B':
@@ -40,7 +41,6 @@ def backgammon():
                 continue
             else:
                 board.bear_off(symbol, (int(c_list[1]) - 1))
-                board.roll_dice()
                 board.draw_board()
         elif command[0] == 'H':
             print("Make move            M [POSITION] [DICE NUMBER]  EXAMPLE M 16 5 \n"

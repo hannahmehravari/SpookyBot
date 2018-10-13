@@ -32,7 +32,7 @@ class Board:
                           ["X", "X"],
                           ]
         self.cell_array = np.chararray((24, 15), unicode=True)
-        self.dice = [None, None]
+        self.dice = []
         self.jailX = []
         self.jailO = []
         self.startO = self.cell_list[0:6]
@@ -43,8 +43,8 @@ class Board:
         self.beared_offX = 0
 
     def roll_dice(self):
-        self.dice[0] = randint(1, 6)
-        self.dice[1] = randint(1, 6)
+        self.dice.append(randint(1, 6))
+        self.dice.append(randint(1, 6))
 
         if self.dice[0] == self.dice[1]:
             self.dice.extend(self.dice)
@@ -137,7 +137,7 @@ class Board:
         else:
             print("Invalid symbol")
         if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start, symbol):
-            if len(self.cell_list[destination]) == 1:
+            if len(self.cell_list[destination]) == 1 and self.cell_list[destination][0] != symbol:
                 jail.append(self.cell_list[destination][0])
                 self.cell_list[destination].pop(0)
 

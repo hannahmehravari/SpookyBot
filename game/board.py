@@ -31,9 +31,11 @@ class Board:
                           ["X", "X"],
                           ]
         self.cell_array = np.chararray((24, 15), unicode=True)
-        self.dice = [None, None]
+        self.dice = [1, 4]
         self.jailX = []
         self.jailO = []
+        self.startO = self.cell_list[0:6]
+        self.startX = self.cell_list[23:17:-1]
 
     def roll_dice(self):
         self.dice[0] = randint(1, 6)
@@ -75,9 +77,9 @@ class Board:
         board = np.concatenate((left_board, bar, right_board), axis=1)
         return board
 
-    def is_cell_available(self, cell, checker):
+    def is_cell_available(self, l, cell, symbol):
         try:
-            if len(self.cell_list[cell]) > 1 and self.cell_list[cell][0] != checker:
+            if len(l[cell]) > 1 and l[cell][0] != symbol:
                 print("Cell is not available")
                 return False
             return True
@@ -97,7 +99,7 @@ class Board:
             #print("succ1")
             if number in self.dice:
                 #print("succ2")
-                if self.is_cell_available(destination, self.cell_list[start][0]):
+                if self.is_cell_available(self.cell_list, destination, self.cell_list[start][0]):
                     #print("succ3")
                     return True
         print("Invalid move")
@@ -115,11 +117,13 @@ class Board:
             destination = start + number
             jail=self.jailX
             print("jail is jail X")
-        else:
+        elif symbol == 'X':
             print("negative direction")
             destination = start - number
             jail=self.jailO
             print("jail is jail 0")
+        else:
+            print("Invalid symbol")
         if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start,symbol):
             if len(self.cell_list[destination]) == 1:
                 jail.append(self.cell_list[destination][0])
@@ -129,6 +133,21 @@ class Board:
             self.cell_list[start].pop(0)
             self.dice.remove(number)
 
+    def release_from_jail(self, symbol, number):
+        if symbol == 'O':
+            jail = self.jailO
+            start = self.startO
+            print("Releasing from jailO...")
+        elif symbol == 'X':
+            jail = self.jailX
+            start = self.startX
+            print("Releasing from jailX...")
+        else:
+            print("Invalid symbol.")
+        if self.is_cell_available(start, number, symbol):
+            start[number].append(jail.pop())
+        else:
+            print("You can't bring back checker at position:", start[number], start, number)
 
 if __name__ == '__main__':
     b = Board()
@@ -139,9 +158,11 @@ if __name__ == '__main__':
 
     #b.roll_dice()
     #print(b.dice)
-    b.make_move(0, 1, 'O')
-    b.make_move(5, 4, 'X')
+    b.make_move(23, 1, 'X')
+    b.make_move(18, 4, 'O')
+    print("jails: ", b.jailX, b.jailO)
 
+    b.release_from_jail("X", 3)
     print("jails: ", b.jailX, b.jailO)
 
     np.savetxt(sys.stdout, b.draw_board(), fmt="%s", header=h, footer=f, comments="", delimiter="    ")

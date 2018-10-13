@@ -1,5 +1,6 @@
 from discord.ext.commands import Bot
 from discord import Game
+from discord.voice_client import VoiceClient
 import random
 
 BOT_PREFIX = ("?","!")
@@ -29,5 +30,10 @@ async def backgammon_test(context):
 async def on_ready():
     await client.change_presence(game = Game(name='Backgammon'))
     print ("Logged in as " + client.user.name)
+
+@client.command()
+async def spook():
+    url = "https://www.youtube.com/watch?v=9DECYte0kZ4"
+    await client.say(url)
 
 client.run(TOKEN)

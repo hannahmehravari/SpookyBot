@@ -39,6 +39,9 @@ class Board:
         self.dice[0] = randint(1, 6)
         self.dice[1] = randint(1, 6)
 
+        if self.dice[0] == self.dice[1]:
+            self.dice.extend(self.dice)
+
     def update_cell_array(self):
         length_list = [len(x) for x in self.cell_list]
         max_length = max(length_list)
@@ -92,11 +95,10 @@ class Board:
             if len(self.cell_list[destination]) == 1:
                 self.jail.append(self.cell_list[destination][0])
                 self.cell_list[destination].pop(0)
-                self.cell_list[destination].append(self.cell_list[start])
-                self.cell_list[start].pop(0)
-            else:
-                self.cell_list[destination].append(self.cell_list[start][0])
-                self.cell_list[start].pop(0)
+
+            self.cell_list[destination].append(self.cell_list[start][0])
+            self.cell_list[start].pop(0)
+            self.dice.remove(number)
 
 
 if __name__ == '__main__':
@@ -111,3 +113,5 @@ if __name__ == '__main__':
     b.make_move(0, b.dice[0])
 
     np.savetxt(sys.stdout, b.draw_board(), fmt="%s", header=h, footer=f, comments="", delimiter="    ")
+
+    print(b.dice)

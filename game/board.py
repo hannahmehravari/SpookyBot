@@ -49,8 +49,6 @@ class Board:
         if self.dice[0] == self.dice[1]:
             self.dice.extend(self.dice)
 
-        print("You roled dice:", self.dice)
-
     def update_cell_array(self):
         length_list = [len(x) for x in self.cell_list]
         max_length = max(length_list)

@@ -21,14 +21,20 @@ class Board:
         top_half = full_board[:, 12:24]
         bottom_half = np.flip(bottom_half)
         separator_row = np.chararray((1,12))
-        separator_row[:, :] = ' '
+        separator_row[:, :] = '0'
 
         print(top_half.shape, bottom_half.shape, separator_row.shape)
-        board = np.concatenate((top_half, separator_row,separator_row, bottom_half))
+        board = np.concatenate((top_half, separator_row, separator_row, bottom_half))
         print(board.shape)
-        #board = board[~np.all(board == 0, axis=1)]
-        #board[board == 3] = " "
-        print(board.shape)
+        board = board[~np.all(board == ' ', axis=1)]
+        board[board == '0'] = " "
+        bar=np.chararray((board.shape[0],1))
+        bar[:]="|"
+        left_board = board[:, 0:6]
+        right_board = board[:, 6:13]
+
+        print(left_board.shape, bar.shape, right_board.shape)
+        board = np.concatenate((left_board, bar, right_board), axis=1)
         return board
 
         # cell_list = [[0, 0],
@@ -60,9 +66,7 @@ class Board:
 
 if __name__ == '__main__':
     b = Board()
-    h = "11---10----9----8----7----6----5----4----3----2----1----0"
-    f = "12---13---14---15---16---17---18---19---20---21---22---23"
+    h = "11---10---09---08---07---06-------05---04---03---02---01---00"
+    f = "12---13---14---15---16---17-------18---19---20---21---22---23"
 
-    np.savetxt(sys.stdout, b.draw_board(), fmt="%s", header=h, footer=f, comments="  ")
-
-
+    np.savetxt(sys.stdout, b.draw_board(), fmt="%s", header=h, footer=f, comments="", delimiter="    ")

@@ -1,4 +1,4 @@
-from game.board import Board
+from board import Board
 import numpy as np
 import sys
 from random import getrandbits, choice
@@ -87,14 +87,19 @@ def backgammon():
                 while not valid_move and len(board.dice) != 0:
                     random_position = choice(computer_positions)
                     random_dice = choice(board.dice)
-
-                    while len(board.jailX) != 0:
-                        if not board.release_from_jail("X", board.dice[0]) or not board.release_from_jail("X",
-                                                                                                           board.dice[1]):
-                            print("Computer can't release any checkers, turn passed")
-
-
                     print("computer rolled dice ", board.dice)
+                    while len(board.jailX) != 0:
+                        if not board.release_from_jail("X", board.dice[1]):
+                            print("Computer can't release any checkers, turn passed")
+                            valid_move = True
+                            board.dice.pop()
+                            break
+                        elif not board.release_from_jail("X", board.dice[0]):
+                            print("Computer can't release any checkers, turn passed")
+                            valid_move = True
+                            board.dice.pop()
+                            breakMove
+
                     valid_move = board.make_move(random_position, random_dice, "X")
 
                     if valid_move:

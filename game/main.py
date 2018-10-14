@@ -12,7 +12,7 @@ def backgammon():
     board.draw_board()
     player = getrandbits(1)
 
-    while not exit_game:
+    while not exit_game and (board.beared_off0 != 15 or board.beared_off1!=15):
         if player == 0:
             if len(board.dice) == 0:
                 player = not player

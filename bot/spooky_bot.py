@@ -1,5 +1,6 @@
-# all bot logic will go here
-
+import sys
+sys.path.append('C:\\Users\\User\Documents\SpookyBot\game')
+import main, board, player
 import discord, re
 import random
 from discord.ext.commands import Bot
@@ -13,11 +14,11 @@ async def on_ready():
     await client.change_presence(game = Game(name='Backgammon'))
     print ("Logged in as " + client.user.name)
 
-global bool inGame = False
-global author player = None
+global in_Game
 
 @client.event
 async def on_message(message):
+    in_Game = False
     # we do not want the bot to reply to itself
     if message.author == client.user:
         return
@@ -31,7 +32,7 @@ async def on_message(message):
 
     # Should be changed to command to activate game
     # Currently gives random responses from list when acted upon
-    if message.content.startswith('!backgammon'):
+    if message.content.startswith('!backgammon') and in_Game == False:
         possible_responses = [
             '{0.author.mention}, are you ready to face the big Spook?!',
             'Doot Doot',
@@ -39,8 +40,7 @@ async def on_message(message):
         ]
         await client.send_message(message.channel,
                     random.choice(possible_responses).format(message))
-        inGame = True
-        backgammon()
+        in_Game = True
 
     # REAL YOUTUBE LINK TO REAL SPOOK STUFF
     if message.content.startswith('!spook'):
@@ -55,20 +55,9 @@ async def on_message(message):
             !spook - real scary stuff"""
         await client.send_message(message.channel, msg)
         
-@client.event
-async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
-
-async def backgammon(message):
-    # we do not want the bot to reply to itself
-    if message.author == client.user:
-        return
-
+    # BACKGAMMON FUNCTIONS BELOW
     #making a move
-    if inGame and message.content.startswith("!move"):
+    if in_Game and message.content.startswith("!move"):
         regex = r'!\move \d{2} \d'
         move = message.content().split()
         moveCounter, moveRoll = move[1],move[2]
@@ -76,16 +65,23 @@ async def backgammon(message):
         backgammon_print()
 
     #release from jail
-    if inGame and message.content.startswith("!rel"):
-        regex = r'!rel \d'
+    if in_Game and message.content.startswith("!release"):
+        regex = r'!release \d'
         rel = message.content().split()[1]
         BGRelease(rel)
+        backgammon_print()
 
     #bear off
-    if inGame and message.content.startswith("!bearoff"):
+    if in_Game and message.content.startswith("!bearoff"):
         regex = r'!bearoff \d'
         boff = message.content.split()[1]
         BGBearOff(boff)
+        backgammon_print()
+
+    if (in_Game == False and message.content.startswith("!bearoff") or message.content.startswith("!release")
+    or message.content.startswith("!move")):
+        await client.send_message(message.channel, """You must start a game of backgammon to use this command!""")
+        
 
     #help
     if message.content.startswith("!bghelp"):
@@ -108,14 +104,21 @@ async def backgammon(message):
             returns the bot to normal function""")
         
     #quit    
-    if inGame and message.content.startswith("!quit"):
-        inGame = False
+    if in_Game and message.content.startswith("!quit"):
+        in_Game = False
         
+@client.event
+async def on_ready():
+    print('Logged in as')
+    print(client.user.name)
+    print(client.user.id)
+    print('------')
+    
 def backgammon_print(board):
     curLine = board[:61]
     remBoard = board[61:]
     reply = ""
-    while (remBoard.len() > 0 and inGame = True):
+    while (remBoard.len() > 0 and in_Game == True):
         reply.append(curLine + "\n")
         curLine = remBoard[:61]
         remBoard = remBoard[61:]

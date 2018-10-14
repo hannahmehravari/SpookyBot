@@ -1,8 +1,7 @@
-from board import Board
+from game.board import Board
 import numpy as np
 import sys
-from random import getrandbits
-
+from random import getrandbits, choice
 
 
 def backgammon():
@@ -12,7 +11,16 @@ def backgammon():
     board.draw_board()
     player = getrandbits(1)
 
-    while not exit_game and (board.beared_off0 != 15 or board.beared_off1!=15):
+
+    while not exit_game:
+
+        if len(board.beared_offO) == 15 or len(board.beared_offX) == 15:
+            if len(board.beared_offO) == 15:
+                print("Human won!")
+                exit_game = True
+            elif len(board.beared_offX) == 15:
+                print("Computer won!")
+                exit_game = True
         if player == 0:
             if len(board.dice) == 0:
                 player = not player
@@ -25,9 +33,9 @@ def backgammon():
             symbol = 'O'
             c_list = command.strip().split(" ")
             print(c_list)
-            if c_list[0] == 'Q':
+            if c_list[0] == 'Quit':
                 exit_game = True
-            elif c_list[0] == 'M':
+            elif c_list[0] == 'Move':
                 if int(c_list[2]) not in board.dice:
                     print(f"You can only play numbers {board.dice}")
                     continue
@@ -35,7 +43,7 @@ def backgammon():
                     board.make_move(int(c_list[1]), int(c_list[2]), symbol)
                     board.draw_board()
 
-            elif c_list[0] == 'R':
+            elif c_list[0] == 'Release':
                 if int(c_list[1]) not in board.dice:
                     print(f"You can only play numbers {board.dice}")
                     continue
@@ -43,19 +51,19 @@ def backgammon():
                     board.release_from_jail(symbol, int(c_list[1]) - 1)
                     board.draw_board()
 
-            elif c_list[0] == 'B':
+            elif c_list[0] == 'Bearoff':
                 if int(c_list[1]) not in board.dice:
                     print(f"You can only play numbers {board.dice}")
                     continue
                 else:
                     board.bear_off(symbol, (int(c_list[1]) - 1))
                     board.draw_board()
-            elif command[0] == 'H':
-                print("Make move            M [POSITION] [DICE NUMBER]  EXAMPLE M 16 5 \n"
-                      "Release from jail    R [START CELL POSITION]     EXAMPLE R 3\n"
-                      "Bear off             B [HOME CELL POSITION]      EXAMPLE B 22\n"
-                      "Help                 H\n"
-                      "Quit                 Q\n")
+            elif command[0] == 'Help':
+                print("Make move            Move [POSITION] [DICE NUMBER]     EXAMPLE M 16 5 \n"
+                      "Release from jail    Release [START CELL POSITION]     EXAMPLE R 3\n"
+                      "Bear off             Bearoff [HOME CELL POSITION]      EXAMPLE B 22\n"
+                      "Help                 Help\n"
+                      "Quit                 Quit\n")
             else:
                 print("Invalid command, enter H for help")
         elif player == 1:
@@ -65,8 +73,33 @@ def backgammon():
                 continue
             else:
                 print("Computer playing...")
-                print("Computer rolled dice: ", board.dice)
-                board.dice.clear()
+
+                computer_positions = []
+                counter = 0
+
+                for l in board.cell_list:
+                    if "X" in l:
+                        computer_positions.append(counter)
+                    counter += 1
+
+                valid_move = False
+
+                while not valid_move and len(board.dice) != 0:
+                    random_position = choice(computer_positions)
+                    random_dice = choice(board.dice)
+
+                    while len(board.jailX) != 0:
+                        if not board.release_from_jail("X", board.dice[0]) or not board.release_from_jail("X",
+                                                                                                           board.dice[1]):
+                            print("Computer can't release any checkers, turn passed")
+
+
+                    print("computer rolled dice ", board.dice)
+                    valid_move = board.make_move(random_position, random_dice, "X")
+
+                    if valid_move:
+                        print("Computer played: M ", random_position, random_dice)
+                        board.draw_board()
 
 
 if __name__ == '__main__':

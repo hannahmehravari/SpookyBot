@@ -39,8 +39,8 @@ class Board:
         self.startX = self.cell_list[23:17:-1]
         self.homeO = self.cell_list[23:17:-1]
         self.homeX = self.cell_list[0:6]
-        self.beared_offO = 0
-        self.beared_offX = 0
+        self.beared_offO = []
+        self.beared_offX = []
 
     def roll_dice(self):
         self.dice.append(randint(1, 6))
@@ -84,13 +84,14 @@ class Board:
         np.savetxt(sys.stdout, board, fmt="%s", header=h, footer=f, comments="", delimiter="    ")
         jail_x_string = " ".join(self.jailX)
         jail_o_string = " ".join(self.jailO)
-        print("O JAIL ", jail_x_string)
-        print('X JAIL ', jail_o_string)
+        print("X JAIL ", jail_x_string)
+        print('O JAIL ', jail_o_string)
 
     def is_cell_available(self, l, cell, symbol):
         try:
             if len(l[cell]) > 1 and l[cell][0] != symbol:
-                print("Cell is not available")
+                if symbol == "O":
+                    print("Cell is not available")
                 return False
             return True
         except IndexError:
@@ -101,13 +102,21 @@ class Board:
             destination = start + number
             jail = self.jailX
         else:
-            destination = start - number
-            jail = self.jailO
-        if self.cell_list[start][0] not in jail:
+            if start>=number:
+                destination = start - number
+                jail = self.jailO
+            else:
+                return False
+        if symbol not in jail:
             if number in self.dice:
                 if self.is_cell_available(self.cell_list, destination, self.cell_list[start][0]):
                     return True
-        print("Invalid move")
+        if symbol == "O":
+            print("Invalid move")
+
+        if len(self.cell_list[start]) == 0:
+            print("This cell is empty, invalid move")
+            return False
         return False
 
     def is_symbol_valid(self, start, symbol):
@@ -128,11 +137,18 @@ class Board:
         if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start, symbol):
             if len(self.cell_list[destination]) == 1 and self.cell_list[destination][0] != symbol:
                 jail.append(self.cell_list[destination][0])
-                self.cell_list[destination].pop(0)
+                self.cell_list[destination].pop()
+                self.cell_list[destination].append(self.cell_list[start][0])
+                self.cell_list[start].pop()
+                self.dice.remove(number)
+                return True
             else:
                 self.cell_list[destination].append(self.cell_list[start][0])
-                self.cell_list[start].pop(0)
+                self.cell_list[start].pop()
                 self.dice.remove(number)
+                return True
+        else:
+            return False
 
     def release_from_jail(self, symbol, number):
         if symbol == 'O':
@@ -145,10 +161,20 @@ class Board:
             print("Releasing from jailX...")
         else:
             print("Invalid symbol.")
+
         if self.is_cell_available(start, number, symbol):
             start[number].append(jail.pop())
+            if "O" in self.cell_list[number]:
+                self.cell_list[number].append("X")
+                self.jailO.append("O")
+                return True
+            else:
+                self.cell_list[number].append("X")
+                return True
+
         else:
             print("You can't bring back checker at position:", start[number], start, number)
+            return False
 
     def bear_off(self, symbol, number):
         if symbol == 'O':

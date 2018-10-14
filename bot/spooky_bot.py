@@ -113,15 +113,6 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-    
-def backgammon_print(board):
-    curLine = board[:61]
-    remBoard = board[61:]
-    reply = ""
-    while (remBoard.len() > 0 and in_Game == True):
-        reply.append(curLine + "\n")
-        curLine = remBoard[:61]
-        remBoard = remBoard[61:]
 
 client.run(TOKEN)
 

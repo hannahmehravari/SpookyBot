@@ -1,6 +1,5 @@
 import sys
 sys.path.append('C:\\Users\\User\Documents\SpookyBot\game')
-import main, board, player
 import discord, re
 import random
 from discord.ext.commands import Bot
@@ -32,7 +31,7 @@ async def on_message(message):
 
     # Should be changed to command to activate game
     # Currently gives random responses from list when acted upon
-    if message.content.startswith('!backgammon') and in_Game == False:
+    if message.content.startswith('!fightme') and in_Game == False:
         possible_responses = [
             '{0.author.mention}, are you ready to face the big Spook?!',
             'Doot Doot',
@@ -51,61 +50,16 @@ async def on_message(message):
     if message.content.startswith('!help'):  
         msg = """The currently available commands are: \n
             !help - shows list of all commands \n
-            !backgammon - starts game of backgammon against spooky bot \n
+            !fightme - starts a fight against SpookyBot \n
             !spook - real scary stuff"""
         await client.send_message(message.channel, msg)
-        
-    # BACKGAMMON FUNCTIONS BELOW
-    #making a move
-    if in_Game and message.content.startswith("!move"):
-        regex = r'!\move \d{2} \d'
-        move = message.content().split()
-        moveCounter, moveRoll = move[1],move[2]
-        BGMove(moveCounter, moveRoll)
-        backgammon_print()
 
-    #release from jail
-    if in_Game and message.content.startswith("!release"):
-        regex = r'!release \d'
-        rel = message.content().split()[1]
-        BGRelease(rel)
-        backgammon_print()
-
-    #bear off
-    if in_Game and message.content.startswith("!bearoff"):
-        regex = r'!bearoff \d'
-        boff = message.content.split()[1]
-        BGBearOff(boff)
-        backgammon_print()
-
-    if (in_Game == False and message.content.startswith("!bearoff") or message.content.startswith("!release")
-    or message.content.startswith("!move")):
-        await client.send_message(message.channel, """You must start a game of backgammon to use this command!""")
-        
-
-    #help
-    if message.content.startswith("!bghelp"):
-        await client.send_message(message.channel,
-        """While Playing Backgammon, the commands avaliable to use are: \n
-
-            1. !move (counter) (roll) - where counter is a 2-digit number for
-            the column with a counter you want to move, and roll is the number
-            of spaces you want to move (has to be a number you rolled)\n
-            
-            2. !rel (start cell) - where start cell is a 2-digit number for the
-            column where you want to release (needs to be a number you rolled,
-            and the station needs to have no enemy counters in it)
-
-            3. !bearoff (home cell) - where home cell is a number (1-6), for
-            a base station where you have a counter to bear off (has to be a
-            number you rolled)
-
-            4. !quit - quits the current game of backgammon against the bot and
-            returns the bot to normal function""")
-        
-    #quit    
-    if in_Game and message.content.startswith("!quit"):
-        in_Game = False
+    #meme
+    if message.content.startswith("!triangles"):
+        possibleResp = [
+            "Triangles are the cause of all fires in the world, because of the fire triangles",
+            "Using squares or circles will contain the fire, as they stop triangles"]
+        await client.send_message(message.channel, random.choice(possibleResp).format(message))
         
 @client.event
 async def on_ready():

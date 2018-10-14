@@ -134,7 +134,7 @@ class Board:
             jail = self.jailO
         else:
             print("Invalid symbol")
-        if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start, symbol):
+        if self.is_move_valid(start, number, symbol) and self.is_symbol_valid(start, symbol) and len(self.cell_list[start])!=0:
             if len(self.cell_list[destination]) == 1 and self.cell_list[destination][0] != symbol:
                 jail.append(self.cell_list[destination][0])
                 self.cell_list[destination].pop()
@@ -164,16 +164,24 @@ class Board:
 
         if self.is_cell_available(start, number, symbol):
             start[number].append(jail.pop())
-            if "O" in self.cell_list[number]:
-                self.cell_list[number].append("X")
-                self.jailO.append("O")
+            if symbol in self.cell_list[number] and len(self.cell_list[number])==1:
+                self.make_move(0, number, symbol)
+                return True
+            elif symbol in self.cell_list[number]:
+                self.cell_list[number].append(symbol)
+                self.dice.pop()
+                return True
+            elif len(self.cell_list[number])==0:
+                self.cell_list[number].append(symbol)
+                self.dice.pop()
                 return True
             else:
-                self.cell_list[number].append("X")
-                return True
+                print("cannot bring back element at this position")
+                return False
+
 
         else:
-            print("You can't bring back checker at position:", start[number], start, number)
+            print("You can't bring back checker at position:", start, number)
             return False
 
     def bear_off(self, symbol, number):

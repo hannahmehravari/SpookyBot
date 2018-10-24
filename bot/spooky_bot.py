@@ -5,7 +5,6 @@ import random
 from discord.ext.commands import Bot
 from discord import Game
 
-TOKEN = 'NTAwNDY0MTgxNDY4NzI1MjU2.DqNjSg.uS1w8xjdvqXKIBzfM-6vilypUC0'
 client= discord.Client()
    
 @client.event
